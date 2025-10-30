@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "@radix-ui/themes/styles.css";
 import Footer from "@/components/Footer";
 import { cn } from "@/lib/utils";
+import Header from "@/components/Header";
+import { Theme } from "@radix-ui/themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,21 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(geistSans.variable, geistMono.variable, "antialiased bg-gray-50 text-gray-900")}>
-        <header className="border-b p-4 bg-white shadow-sm">
-          <div className="max-w-5xl mx-auto flex justify-between items-center">
-            <h1 className="text-xl font-bold text-green-700">Sabay.ph</h1>
-            <nav className="space-x-4 text-sm font-medium">
-              <a href="/dashboard">Dashboard</a>
-              <a href="/rides">Rides</a>
-              <a href="/routes">Routes</a>
-            </nav>
-          </div>
-        </header>
-        <main className="max-w-5xl mx-auto py-6">
-          {children}
+      <body className={cn(geistSans.variable, geistMono.variable, "antialiased min-h-screen flex flex-col")}>
+        <Theme>
+          <Header />
+          <main className="flex-1">{children}</main>
           <Footer />
-        </main>
+        </Theme>
       </body>
     </html>
   );
