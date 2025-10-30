@@ -1,30 +1,109 @@
-This is a [Sabay](https://sabay.ph) a carpooling service in Philippines.
+# 🚗 Sabay.ph — Carpooling Made Simple
 
-## Getting Started
+**Sabay.ph** is a community-driven carpooling web app built for the Philippines 🇵🇭.
+It helps passengers and drivers share rides efficiently — saving time, money, and the planet 🌱.
 
-First, run the development server:
+---
 
+## ✨ Features (MVP)
+- 🔐 User authentication (Driver / Passenger)
+- 🚘 Create and view routes (driver-managed)
+- 🧭 Request rides with pickup/drop-off points
+- 💬 Negotiate pickup zones
+- 💸 Smart fare estimation
+- 🔔 Real-time updates (driver ↔ passenger)
+- 📍 Interactive map for route planning (Mapbox)
+
+---
+
+## 🧱 Tech Stack
+| Purpose | Tech |
+|----------|------|
+| Framework | [Next.js 15 (App Router)](https://nextjs.org/) |
+| ORM | [Prisma](https://www.prisma.io/) |
+| Database | PostgreSQL |
+| Styling | [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com) |
+| Auth | [NextAuth.js](https://authjs.dev/) |
+| Maps | [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/) |
+| Realtime | Socket.io or Pusher (planned) |
+| Validation | [Zod](https://zod.dev/) |
+| Hosting | [Vercel](https://vercel.com/) + [Neon.tech](https://neon.tech/) |
+
+---
+
+## 📂 Folder Structure
+src/
+└─ app/
+├─ (auth)/ # Login / register pages
+├─ dashboard/ # User overview
+├─ rides/ # Passenger requests
+├─ routes/ # Driver routes CRUD
+├─ api/ # API route handlers
+├─ components/ # Shared UI components
+├─ lib/ # DB, sockets, and helpers
+└─ styles/ # Global CSS
+
+
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Clone the repo
 ```bash
-pnpm dev
+git clone https://github.com/martuico/sabay.git
+cd sabay
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+pnpm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Setup environment variables
+Create a .env file:
+```
+DATABASE_URL="postgresql://user:password@localhost:5432/sabay"
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+MAPBOX_ACCESS_TOKEN="your-mapbox-key"
+```
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Setup database
+```
+pnpm prisma:generate
+pnpm prisma:push
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Run server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+pnpm dev
+```
+Visit [http://localhost:3000](http://localhost:3000)
 
-## Deploy on Vercel
+## Roadmap
+- [] Passenger ride requests and negotiations
+- [] Real-time trip tracking via Socket.io
+- [] Payment gateway (Stripe / PayMongo)
+- [] Mobile PWA support
+- [] Driver verification system
+- [] AI-based route matching (stretch goal)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Fork the repo
+- Create a feature branch
+- Submit a pull request 🚀
+
+### We’re open to contributions for:
+- UI/UX improvements
+- Map-based routing logic
+- Payment & wallet system
+- Admin dashboard
+
+## Inspiration
+
+GrabCar and Angkas solved ridesharing, but Sabay.ph focuses on community carpooling — reducing traffic, costs, and emissions by matching neighbors going the same way. 🌏
+
+“Sabay tayo, sama ka na!” – The spirit of Filipino carpooling 🇵🇭
