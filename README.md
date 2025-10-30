@@ -51,8 +51,8 @@ src/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/martuico/sabay.git
-cd sabay
+git clone https://github.com/martuico/sabay.ph.git
+cd sabay.ph
 ```
 
 ### 2. Install dependencies
