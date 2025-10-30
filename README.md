@@ -83,12 +83,12 @@ pnpm dev
 Visit [http://localhost:3000](http://localhost:3000)
 
 ## Roadmap
-- [] Passenger ride requests and negotiations
-- [] Real-time trip tracking via Socket.io
-- [] Payment gateway (Stripe / PayMongo)
-- [] Mobile PWA support
-- [] Driver verification system
-- [] AI-based route matching (stretch goal)
+- [ ] Passenger ride requests and negotiations
+- [ ] Real-time trip tracking via Socket.io
+- [ ] Payment gateway (Stripe / PayMongo)
+- [ ] Mobile PWA support
+- [ ] Driver verification system
+- [ ] AI-based route matching (stretch goal)
 
 ## Contributing
 
