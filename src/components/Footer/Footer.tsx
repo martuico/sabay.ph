@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Facebook, Twitter, Instagram } from "lucide-react";
+import { Facebook, Instagram, Linkedin, XIcon } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -32,15 +32,6 @@ export default function Footer() {
               <span className="sr-only">Facebook</span>
             </Link>
             <Link
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-9 w-9 rounded-full border flex items-center justify-center hover:bg-secondary hover:text-secondary-foreground hover:border-secondary transition-colors"
-            >
-              <Twitter className="h-4 w-4" />
-              <span className="sr-only">Twitter</span>
-            </Link>
-            <Link
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
@@ -48,6 +39,15 @@ export default function Footer() {
             >
               <Instagram className="h-4 w-4" />
               <span className="sr-only">Instagram</span>
+            </Link>
+            <Link
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-9 w-9 rounded-full border flex items-center justify-center hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+            >
+              <Linkedin className="h-4 w-4" />
+              <span className="sr-only">LinkedIn</span>
             </Link>
           </div>
         </div>

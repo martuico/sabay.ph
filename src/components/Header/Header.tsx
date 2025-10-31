@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
+import LoginDialog from "@/components/LoginDialog";
+import SignupDialog from "@/components/SignupDialog";
 
 export default function Header() {
+  const [showRegistration, setShowRegistration] = useState(false);
+
   return (
-    <header className="border-b p-4 bg-white shadow-sm">
-      <div className="container flex h-16 items-center justify-between mx-auto">
+    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+      <div className="container max-w-7xl mx-auto  flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <div className="h-10 w-10 text-primary group-hover:scale-110 transition-transform">
             <Logo className="w-full h-full" />
@@ -18,7 +25,15 @@ export default function Header() {
           </div>
         </Link>
 
-        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Share your Ride</Button>
+        <div className="flex items-center gap-2">
+          <LoginDialog onOpenRegistration={() => setShowRegistration(true)}>
+            <Button variant="outline">Login</Button>
+          </LoginDialog>
+
+          <SignupDialog open={showRegistration} onOpenChange={setShowRegistration}>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Share your Ride</Button>
+          </SignupDialog>
+        </div>
       </div>
     </header>
   );
