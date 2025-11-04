@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { signIn } from "@/lib/auth-client";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -46,12 +47,21 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (formData: LoginFormData) => {
     setIsLoading(true);
     try {
       // TODO: Implement actual login logic
-      console.log("Login data:", data);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log("Login data:", formData);
+      const { data, error } = await signIn.email({
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/dashboard",
+        rememberMe: false,
+      });
+      console.log(data);
+      if (error) {
+        throw new Error(error.message);
+      }
 
       toast({
         title: "Login successful",

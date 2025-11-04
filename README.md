@@ -21,9 +21,9 @@ It helps passengers and drivers share rides efficiently — saving time, money, 
 |----------|------|
 | Framework | [Next.js 15 (App Router)](https://nextjs.org/) |
 | ORM | [Prisma](https://www.prisma.io/) |
-| Database | PostgreSQL |
+| Database | PostgreSQL | Meilisearch | Redis
 | Styling | [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com) |
-| Auth | [NextAuth.js](https://authjs.dev/) |
+| Auth | [BetterAuth.js](https://www.better-auth.com/) |
 | Maps | [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/) |
 | Realtime | Socket.io or Pusher (planned) |
 | Validation | [Zod](https://zod.dev/) |
@@ -44,6 +44,11 @@ src/
 └─ styles/ # Global CSS
 
 
+## Prerequesite and install in the following in your local machine
+1. pnpm
+2. Postgresql
+3. Redis
+4. Meilisearch
 
 ---
 

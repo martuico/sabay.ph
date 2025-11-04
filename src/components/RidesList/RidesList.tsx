@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Clock, MapPin, Users, DollarSign } from "lucide-react";
+import { Clock, MapPin, Users, DollarSign, Fuel } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Pagination,
@@ -109,8 +109,8 @@ export default function RidesList({ selectedDate, from, to, selectedRideId, onRi
                         <span>{ride.availableSeats} seats</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        Gas:
-                        <span className="font-semibold text-primary">₱{ride.price}</span>
+                        <Fuel className="h-3.5 w-3.5 text-primary" />
+                        <span className="font-semibold ">₱{ride.price}</span>
                       </div>
                     </div>
                   </div>
