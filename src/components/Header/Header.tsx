@@ -37,11 +37,15 @@ export default function Header() {
           ) : (
             <>
               <LoginDialog onOpenRegistration={() => setShowRegistration(true)}>
-                <Button variant="outline">Login</Button>
+                <Button className="cursor-pointer" variant="outline">
+                  Login
+                </Button>
               </LoginDialog>
 
               <SignupDialog open={showRegistration} onOpenChange={setShowRegistration}>
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Share your Ride</Button>
+                <Button className="cursor-pointer bg-primary hover:bg-primary/90 text-primary-foreground">
+                  Share your Ride
+                </Button>
               </SignupDialog>
             </>
           )}

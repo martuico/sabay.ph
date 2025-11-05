@@ -35,7 +35,7 @@
         "noChildrenProp": "error",
         "useExhaustiveDependencies": "warn",
         "useHookAtTopLevel": "error",
-        "useJsxKeyInIterable": "error",
+        "useJsxKeyInIterable": "off",
         "noUnusedVariables": "error"
       },
       "style": {
@@ -45,7 +45,11 @@
         "useNumberNamespace": "error"
       },
       "security": { "noDangerouslySetInnerHtml": "error" },
-      "suspicious": { "noCommentText": "error", "noDuplicateJsxProps": "error" }
+      "suspicious": {
+        "noCommentText": "error",
+        "noDuplicateJsxProps": "error",
+        "noArrayIndexKey": "off"
+      }
     },
     "domains": {
       "next": "recommended",

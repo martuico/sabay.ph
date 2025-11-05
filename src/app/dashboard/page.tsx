@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  MapPin,
   DollarSign,
   Car,
   TrendingUp,
@@ -11,13 +10,9 @@ import {
   CheckCircle2,
   Navigation,
   Settings,
-  File,
-  MapPinPlus,
-  MapPinCheckInside,
   LocationEditIcon,
-  SearchSlashIcon,
-  SearchCode,
   SearchIcon,
+  Wallet2,
 } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
@@ -27,7 +22,6 @@ import UpcomingHistoryRidesTabs from "@/components/UpcomingHistoryRidesTabs";
 
 export default async function DashboardPage() {
   const { user } = await auth.api.getSession({ headers: await headers() });
-  console.log(user);
 
   return (
     <>
@@ -68,11 +62,20 @@ export default async function DashboardPage() {
                   <div className="text-muted-foreground">Joined {mockUser.joinedDate}</div>
                 </div>
               </div>
-
-              <Button variant="outline" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Edit Profile
-              </Button>
+              <div className="flex flex-col gap-4">
+                <Link href="/dashboard/profile">
+                  <Button className="cursor-pointer" variant="outline" size="sm">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Edit Profile
+                  </Button>
+                </Link>
+                <Link href="/dashboard/earnings">
+                  <Button className="cursor-pointer" variant="secondary" size="sm">
+                    <Wallet2 className="h-4 w-4 mr-2" />
+                    Earnings
+                  </Button>
+                </Link>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -154,7 +157,7 @@ export default async function DashboardPage() {
             </Card>
           </Link>
 
-          <Link href="/driver/add-route">
+          <Link href="/dashboard/add-route">
             <Card className="cursor-pointer hover:shadow-lg transition-shadow border-2 border-primary/20 hover:border-primary">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
@@ -171,7 +174,7 @@ export default async function DashboardPage() {
           </Link>
 
           {mockUser.role === "DRIVER" && (
-            <Link href="/driver/active-ride">
+            <Link href="/dashboard/active-ride">
               <Card className="cursor-pointer hover:shadow-lg transition-shadow border-2 border-secondary/20 hover:border-secondary">
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4">

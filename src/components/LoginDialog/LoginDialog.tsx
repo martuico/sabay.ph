@@ -20,10 +20,12 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
+import { Checkbox } from "../ui/checkbox";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  rememberMe: z.boolean().default(false),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -43,10 +45,16 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
+    watch,
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      rememberMe: false,
+    },
   });
 
+  const rememberMe = watch("rememberMe");
   const onSubmit = async (formData: LoginFormData) => {
     setIsLoading(true);
     try {
@@ -56,7 +64,7 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
         email: formData.email,
         password: formData.password,
         callbackURL: "/dashboard",
-        rememberMe: false,
+        rememberMe: formData.rememberMe,
       });
       console.log(data);
       if (error) {
@@ -107,7 +115,20 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
             {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
           </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="rememberMe"
+              {...register("rememberMe")}
+              checked={rememberMe} // Manually set checked state based on watched value
+              onCheckedChange={(checked) => setValue("rememberMe", checked)}
+              disabled={isLoading}
+            />
+            <Label htmlFor="rememberMe" className="cursor-pointer">
+              Remember Me
+            </Label>
+          </div>
+
+          <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Login
           </Button>
@@ -117,7 +138,7 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
             <Button
               type="button"
               variant="link"
-              className="p-0 h-auto font-semibold"
+              className="p-0 h-auto font-semibold cursor-pointer"
               onClick={() => {
                 setOpen(false);
                 onOpenRegistration?.();
