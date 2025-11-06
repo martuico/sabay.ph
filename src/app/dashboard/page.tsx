@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,13 @@ import { headers } from "next/headers";
 import UpcomingHistoryRidesTabs from "@/components/UpcomingHistoryRidesTabs";
 
 export default async function DashboardPage() {
-  const { user } = await auth.api.getSession({ headers: await headers() });
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session) {
+    redirect("/");
+  }
+
+  const { user } = session;
 
   return (
     <>

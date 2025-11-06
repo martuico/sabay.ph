@@ -5,13 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Loader2, X } from "lucide-react";
-import { signUp } from "@/lib/auth-client";
+//import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { SignUpFormData, signUpSchema } from "./SignUp.interface";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
+import { createAndSignInUser } from "@/actions/userActions";
 
 export default function SignUp() {
   const { toast } = useToast();
@@ -31,30 +32,41 @@ export default function SignUp() {
     setLoading(true);
     try {
       console.log("Signup data:", data);
-      await signUp.email({
-        email: data.email,
-        password: data.password,
-        name: `${data.firstName} ${data.lastName}`,
-        callbackURL: "/setup-profile",
-        fetchOptions: {
-          onResponse: () => {
-            setLoading(false);
-          },
-          onRequest: () => {
-            setLoading(true);
-          },
-          onError: (ctx) => {
-            toast({
-              title: "Signup failed",
-              description: ctx.error.message,
-              variant: "destructive",
-            });
-          },
-          onSuccess: async () => {
-            router.push("/dashboard");
-          },
-        },
-      });
+      await createAndSignInUser(data);
+      router.push("/dashboard/setup-profile");
+      //const { data: user } = await signUp.email({
+      //  email: data.email,
+      //  password: data.password,
+      //  name: `${data.firstName} ${data.lastName}`,
+      //  callbackURL: "/setup-profile",
+      //  fetchOptions: {
+      //    onResponse: () => {
+      //      setLoading(false);
+      //    },
+      //    onRequest: () => {
+      //      setLoading(true);
+      //    },
+      //    onError: (ctx) => {
+      //      toast({
+      //        title: "Signup failed",
+      //        description: ctx.error.message,
+      //        variant: "destructive",
+      //      });
+      //    },
+      //    onSuccess: async ({ data }) => {
+      //      console.log(c);
+      //      await prisma.user.update({
+      //        where: { id: user?.user.id },
+      //        data: {
+      //          firstName: data.firstName,
+      //          lastName: data.lastName,
+      //          phone: data.phone,
+      //        },
+      //      });
+      //      router.push("/setup-profileq;
+      //    },
+      //  },
+      //});
 
       toast({
         title: "Signup successful",
