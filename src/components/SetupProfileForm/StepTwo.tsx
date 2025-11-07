@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@radix-ui/react-checkbox";
-import { Upload } from "lucide-react";
+import { CheckCircle2, Upload } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { type FieldErrors, type FieldValues, type UseFormRegister } from "react-hook-form";
 

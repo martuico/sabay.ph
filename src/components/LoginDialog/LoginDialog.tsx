@@ -25,7 +25,7 @@ import { Checkbox } from "../ui/checkbox";
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  rememberMe: z.boolean().default(false),
+  rememberMe: z.boolean(),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -54,7 +54,6 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
     },
   });
 
-  const rememberMe = watch("rememberMe");
   const onSubmit = async (formData: LoginFormData) => {
     setIsLoading(true);
     try {
@@ -119,8 +118,8 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
             <Checkbox
               id="rememberMe"
               {...register("rememberMe")}
-              checked={rememberMe} // Manually set checked state based on watched value
-              onCheckedChange={(checked) => setValue("rememberMe", checked)}
+              checked={watch("rememberMe")}
+              onCheckedChange={(checked) => setValue("rememberMe", !!checked)}
               disabled={isLoading}
             />
             <Label htmlFor="rememberMe" className="cursor-pointer">

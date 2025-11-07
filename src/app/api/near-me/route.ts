@@ -2,8 +2,6 @@ import { getGridsInRadius, haversineDistance } from "@/lib/grid";
 import Redis from "ioredis";
 import { MeiliSearch } from "meilisearch";
 
-const redis = new Redis(process.env.REDIS_URL);
-const meili = new MeiliSearch({ host: process.env.MEILISEARCH_URL! });
 const CACHE_TTL = 60 * 5; // 5 minutes
 
 // Main endpoint
@@ -14,6 +12,11 @@ export async function GET(req: Request) {
   const radius = Number.parseInt(url.searchParams.get("radius") || "5000"); // meters
   const q = url.searchParams.get("q") || "";
   const radiusKm = radius / 1000;
+  if (!process.env.REDIS_URL) return Response.json({ status: "Ok" });
+  if (!process.env.MEILISEARCH_URL) return Response.json({ status: "Ok" });
+
+  const redis = new Redis(process.env.REDIS_URL);
+  const meili = new MeiliSearch({ host: process.env.MEILISEARCH_URL! });
 
   const grids = getGridsInRadius(lat, lng, radiusKm);
   let ids: string[] = [];
@@ -22,10 +25,11 @@ export async function GET(req: Request) {
   const pipeline = redis.pipeline();
   grids.forEach((grid) => pipeline.get(`near:${grid}:${q}`));
   const results = await pipeline.exec();
-
-  results.forEach(([err, value]: any) => {
-    if (!err && value) ids.push(...JSON.parse(value));
-  });
+  if (results && results?.length > 0) {
+    results.forEach(([err, value]: any) => {
+      if (!err && value) ids.push(...JSON.parse(value));
+    });
+  }
   ids = [...new Set(ids)]; // deduplicate
 
   // 2️⃣ Cache miss → query Meilisearch
@@ -54,7 +58,7 @@ export async function GET(req: Request) {
   });
 
   // 4️⃣ Exact distance filter & sort
-  const filtered = docs.hits
+  const filtered = docs.results
     .map((hit: any) => ({
       ...hit,
       distance: haversineDistance(lat, lng, hit._geo.lat, hit._geo.lng),

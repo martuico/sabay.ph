@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
 import { type FieldErrors, type FieldValues, type UseFormRegister } from "react-hook-form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 export default function StepThree({
   register,
@@ -25,13 +26,11 @@ export default function StepThree({
         <div className="space-y-2">
           <Label htmlFor="carMake">Car Make *</Label>
           <Input id="carMake" placeholder="e.g., Toyota" {...register("carMake")} disabled={isLoading} />
-          {errors.carMake && <p className="text-sm text-destructive">{errors.carMake.message}</p>}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="carModel">Car Model *</Label>
           <Input id="carModel" placeholder="e.g., Vios" {...register("carModel")} disabled={isLoading} />
-          {errors.carModel && <p className="text-sm text-destructive">{errors.carModel.message}</p>}
         </div>
       </div>
 
@@ -39,19 +38,16 @@ export default function StepThree({
         <div className="space-y-2">
           <Label htmlFor="carYear">Year *</Label>
           <Input id="carYear" placeholder="2020" {...register("carYear")} disabled={isLoading} />
-          {errors.carYear && <p className="text-sm text-destructive">{errors.carYear.message}</p>}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="carPlate">Plate Number *</Label>
           <Input id="carPlate" placeholder="ABC 1234" {...register("carPlate")} disabled={isLoading} />
-          {errors.carPlate && <p className="text-sm text-destructive">{errors.carPlate.message}</p>}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="carColor">Color *</Label>
           <Input id="carColor" placeholder="White" {...register("carColor")} disabled={isLoading} />
-          {errors.carColor && <p className="text-sm text-destructive">{errors.carColor.message}</p>}
         </div>
       </div>
 

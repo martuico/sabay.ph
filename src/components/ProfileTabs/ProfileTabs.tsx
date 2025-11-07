@@ -13,7 +13,7 @@ import {
   Phone,
   Briefcase,
   Building2,
-  Car,
+  Car as CarIcon,
   Upload,
   CheckCircle2,
   Edit2,
@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import z from "zod";
-import { User } from "@/generated/prisma";
+import { AssetFile, Car, User } from "@/generated/prisma";
 import { useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -52,7 +52,11 @@ const carInfoSchema = z.object({
 type PersonalInfoFormData = z.infer<typeof personalInfoSchema>;
 type CarInfoFormData = z.infer<typeof carInfoSchema>;
 
-export default function ProfileTabs({ user }: { user: User }) {
+type UserWithCar = User & {
+  car?: (Car & { photos: AssetFile[] }) | null;
+};
+
+export default function ProfileTabs({ user }: { user: UserWithCar }) {
   const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   const [isEditingCar, setIsEditingCar] = useState(false);
   const [activeTab, setActiveTab] = useState("personal");
@@ -61,25 +65,25 @@ export default function ProfileTabs({ user }: { user: User }) {
   const personalForm = useForm<PersonalInfoFormData>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phone: user.phone,
-      profession: user.profession,
-      companyName: user.companyName,
+      //firstName: user.firstName,
+      //lastName: user.lastName,
+      //email: user.email,
+      //phone: user.phone,
+      //profession: user.profession,
+      //companyName: user.companyName,
     },
   });
 
   const carForm = useForm<CarInfoFormData>({
     resolver: zodResolver(carInfoSchema),
     defaultValues: {
-      carMake: user.car.make,
-      carModel: user.car.model,
-      carYear: user.car.year,
-      carPlate: user.car.plate,
-      carColor: user.car.color,
-      fuelType: user.car.fuelType,
-      seatingCapacity: user.car.seatingCapacity,
+      //carMake: user.car.make,
+      //carModel: user.car.model,
+      //carYear: user.car.year,
+      //carPlate: user.car.plate,
+      //carColor: user.car.color,
+      //fuelType: user.car.fuelType,
+      //seatingCapacity: user.car.seatingCapacity,
     },
   });
 
@@ -128,7 +132,7 @@ export default function ProfileTabs({ user }: { user: User }) {
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="personal">Personal Info</TabsTrigger>
         <TabsTrigger value="documents">Documents</TabsTrigger>
-        {user.isDriver && <TabsTrigger value="car">Car Information</TabsTrigger>}
+        {user.driversLicense && <TabsTrigger value="car">Car Information</TabsTrigger>}
       </TabsList>
 
       {/* Personal Information Tab */}
@@ -140,12 +144,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                 <CardTitle>Personal Information</CardTitle>
                 <CardDescription>Manage your personal details and contact information</CardDescription>
               </div>
-              {!isEditingPersonal ? (
-                <Button onClick={() => setIsEditingPersonal(true)} variant="outline" size="sm">
-                  <Edit2 className="h-4 w-4 mr-2" />
-                  Edit
-                </Button>
-              ) : (
+              {isEditingPersonal ? (
                 <Button
                   onClick={() => {
                     setIsEditingPersonal(false);
@@ -156,6 +155,11 @@ export default function ProfileTabs({ user }: { user: User }) {
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel
+                </Button>
+              ) : (
+                <Button onClick={() => setIsEditingPersonal(true)} variant="outline" size="sm">
+                  <Edit2 className="h-4 w-4 mr-2" />
+                  Edit
                 </Button>
               )}
             </div>
@@ -171,7 +175,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="firstName"
                       {...personalForm.register("firstName")}
                       disabled={!isEditingPersonal}
-                      className={!isEditingPersonal ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                   </div>
                   {personalForm.formState.errors.firstName && (
@@ -187,7 +191,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="lastName"
                       {...personalForm.register("lastName")}
                       disabled={!isEditingPersonal}
-                      className={!isEditingPersonal ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                   </div>
                   {personalForm.formState.errors.lastName && (
@@ -205,7 +209,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                     type="email"
                     {...personalForm.register("email")}
                     disabled={!isEditingPersonal}
-                    className={!isEditingPersonal ? "bg-muted" : ""}
+                    className={isEditingPersonal ? "" : "bg-muted"}
                   />
                 </div>
                 {personalForm.formState.errors.email && (
@@ -221,7 +225,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                     id="phone"
                     {...personalForm.register("phone")}
                     disabled={!isEditingPersonal}
-                    className={!isEditingPersonal ? "bg-muted" : ""}
+                    className={isEditingPersonal ? "" : "bg-muted"}
                   />
                 </div>
                 {personalForm.formState.errors.phone && (
@@ -237,7 +241,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                     id="profession"
                     {...personalForm.register("profession")}
                     disabled={!isEditingPersonal}
-                    className={!isEditingPersonal ? "bg-muted" : ""}
+                    className={isEditingPersonal ? "" : "bg-muted"}
                   />
                 </div>
                 {personalForm.formState.errors.profession && (
@@ -253,7 +257,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                     id="companyName"
                     {...personalForm.register("companyName")}
                     disabled={!isEditingPersonal}
-                    className={!isEditingPersonal ? "bg-muted" : ""}
+                    className={isEditingPersonal ? "" : "bg-muted"}
                   />
                 </div>
               </div>
@@ -285,7 +289,7 @@ export default function ProfileTabs({ user }: { user: User }) {
               <div className="flex flex-col md:flex-row items-start gap-4">
                 <div className="w-full md:w-48 h-32 border-2 border-dashed rounded-lg overflow-hidden bg-muted">
                   <img
-                    src={user.governmentIdUrl || "/placeholder.svg"}
+                    src={user.govermentPhotoUrl || "/placeholder.svg"}
                     alt="Government ID"
                     className="w-full h-full object-cover"
                   />
@@ -308,7 +312,7 @@ export default function ProfileTabs({ user }: { user: User }) {
           </Card>
 
           {/* Company ID */}
-          {user.companyIdUrl && (
+          {user.companyId && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -321,7 +325,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                 <div className="flex flex-col md:flex-row items-start gap-4">
                   <div className="w-full md:w-48 h-32 border-2 border-dashed rounded-lg overflow-hidden bg-muted">
                     <img
-                      src={user.companyIdUrl || "/placeholder.svg"}
+                      src={user.companyName || "/placeholder.svg"}
                       alt="Company ID"
                       className="w-full h-full object-cover"
                     />
@@ -345,11 +349,11 @@ export default function ProfileTabs({ user }: { user: User }) {
           )}
 
           {/* Driver's License */}
-          {user.isDriver && (
+          {user.driversLicense && (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Car className="h-5 w-5 text-primary" />
+                  <CarIcon className="h-5 w-5 text-primary" />
                   Driver's License
                 </CardTitle>
                 <CardDescription>Your valid driver's license</CardDescription>
@@ -358,7 +362,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                 <div className="flex flex-col md:flex-row items-start gap-4">
                   <div className="w-full md:w-48 h-32 border-2 border-dashed rounded-lg overflow-hidden bg-muted">
                     <img
-                      src={user.driversLicenseUrl || "/placeholder.svg"}
+                      src={user.driversLicensePhotoUrl || "/placeholder.svg"}
                       alt="Driver's License"
                       className="w-full h-full object-cover"
                     />
@@ -386,7 +390,7 @@ export default function ProfileTabs({ user }: { user: User }) {
       </TabsContent>
 
       {/* Car Information Tab */}
-      {user.isDriver && (
+      {user.driversLicense && (
         <TabsContent value="car" className="mt-6">
           <Card>
             <CardHeader>
@@ -395,12 +399,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                   <CardTitle>Car Information</CardTitle>
                   <CardDescription>Manage your vehicle details and documents</CardDescription>
                 </div>
-                {!isEditingCar ? (
-                  <Button onClick={() => setIsEditingCar(true)} variant="outline" size="sm">
-                    <Edit2 className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                ) : (
+                {isEditingCar ? (
                   <Button
                     onClick={() => {
                       setIsEditingCar(false);
@@ -412,6 +411,11 @@ export default function ProfileTabs({ user }: { user: User }) {
                     <X className="h-4 w-4 mr-2" />
                     Cancel
                   </Button>
+                ) : (
+                  <Button onClick={() => setIsEditingCar(true)} variant="outline" size="sm">
+                    <Edit2 className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
                 )}
               </div>
             </CardHeader>
@@ -421,13 +425,13 @@ export default function ProfileTabs({ user }: { user: User }) {
                 <div className="space-y-2">
                   <Label>Car Photos</Label>
                   <div className="grid grid-cols-3 gap-4">
-                    {user.car.photos.map((photo, index) => (
+                    {user.car?.photos.map((photo, index) => (
                       <div
                         key={index}
                         className="aspect-video border-2 border-dashed rounded-lg overflow-hidden bg-muted"
                       >
                         <img
-                          src={photo || "/placeholder.svg"}
+                          src={photo.url || "/placeholder.svg"}
                           alt={`Car photo ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
@@ -450,7 +454,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="carMake"
                       {...carForm.register("carMake")}
                       disabled={!isEditingCar}
-                      className={!isEditingCar ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                     {carForm.formState.errors.carMake && (
                       <p className="text-sm text-destructive">{carForm.formState.errors.carMake.message}</p>
@@ -463,7 +467,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="carModel"
                       {...carForm.register("carModel")}
                       disabled={!isEditingCar}
-                      className={!isEditingCar ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                     {carForm.formState.errors.carModel && (
                       <p className="text-sm text-destructive">{carForm.formState.errors.carModel.message}</p>
@@ -478,7 +482,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="carYear"
                       {...carForm.register("carYear")}
                       disabled={!isEditingCar}
-                      className={!isEditingCar ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                     {carForm.formState.errors.carYear && (
                       <p className="text-sm text-destructive">{carForm.formState.errors.carYear.message}</p>
@@ -491,7 +495,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="carPlate"
                       {...carForm.register("carPlate")}
                       disabled={!isEditingCar}
-                      className={!isEditingCar ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                     {carForm.formState.errors.carPlate && (
                       <p className="text-sm text-destructive">{carForm.formState.errors.carPlate.message}</p>
@@ -504,7 +508,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       id="carColor"
                       {...carForm.register("carColor")}
                       disabled={!isEditingCar}
-                      className={!isEditingCar ? "bg-muted" : ""}
+                      className={isEditingPersonal ? "" : "bg-muted"}
                     />
                     {carForm.formState.errors.carColor && (
                       <p className="text-sm text-destructive">{carForm.formState.errors.carColor.message}</p>
@@ -516,7 +520,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                   <div className="space-y-2">
                     <Label htmlFor="fuelType">Fuel Type</Label>
                     {isEditingCar ? (
-                      <Select defaultValue={user.car.fuelType}>
+                      <Select defaultValue={user.car?.fuelType}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -528,14 +532,14 @@ export default function ProfileTabs({ user }: { user: User }) {
                         </SelectContent>
                       </Select>
                     ) : (
-                      <Input value={user.car.fuelType} disabled className="bg-muted" />
+                      <Input value={user.car?.fuelType} disabled className="bg-muted" />
                     )}
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="seatingCapacity">Seating Capacity</Label>
                     {isEditingCar ? (
-                      <Select defaultValue={user.car.seatingCapacity}>
+                      <Select defaultValue={user.car?.seatingCapacity?.toString() ?? ""}>
                         <SelectTrigger>
                           <SelectValue />
                         </SelectTrigger>
@@ -549,7 +553,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                         </SelectContent>
                       </Select>
                     ) : (
-                      <Input value={`${user.car.seatingCapacity} passengers`} disabled className="bg-muted" />
+                      <Input value={`${user.car?.seatingCapacity} passengers`} disabled className="bg-muted" />
                     )}
                   </div>
                 </div>
@@ -566,7 +570,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       <Label>Car Registration (OR/CR)</Label>
                       <div className="aspect-video border-2 border-dashed rounded-lg overflow-hidden bg-muted">
                         <img
-                          src={user.car.registrationUrl || "/placeholder.svg"}
+                          src={user.car?.registrationImageUrl || "/placeholder.svg"}
                           alt="Car Registration"
                           className="w-full h-full object-cover"
                         />
@@ -583,7 +587,7 @@ export default function ProfileTabs({ user }: { user: User }) {
                       <Label>Car Insurance</Label>
                       <div className="aspect-video border-2 border-dashed rounded-lg overflow-hidden bg-muted">
                         <Image
-                          src={user.car.insuranceUrl || "/placeholder.svg"}
+                          src={user.car?.insuranceImageUrl || "/placeholder.svg"}
                           alt="Car Insurance"
                           className="w-full h-full object-cover"
                           width={400}

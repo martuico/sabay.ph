@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { rideHistory, upcomingRides } from "./UpcomingHistoryRidesTabs.mocks";
-import { Calendar, Car, CheckCircle2, Clock, MapPin, Navigation, Star, Users, XCircle } from "lucide-react";
+import { Calendar, Car, CheckCircle2, Clock, MapPin, Navigation, Plus, Star, Users, XCircle } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "@radix-ui/themes";
 import Link from "next/link";
@@ -95,14 +95,14 @@ export default function UpcomingHistoryRidesTabs() {
                       </div>
                       {ride.type === "driver" && (
                         <Link href="/driver/active-ride">
-                          <Button size="sm">
+                          <Button size="1">
                             <Navigation className="h-4 w-4 mr-2" />
                             Start Trip
                           </Button>
                         </Link>
                       )}
                       {ride.type === "passenger" && (
-                        <Button size="sm" variant="outline">
+                        <Button size="1" variant="outline">
                           View Details
                         </Button>
                       )}
@@ -186,7 +186,7 @@ export default function UpcomingHistoryRidesTabs() {
                   <div className="flex flex-col items-end gap-2">
                     <p className="text-xl font-bold">₱{ride.price}</p>
                     {ride.status === "completed" && !ride.rating && (
-                      <Button size="sm" variant="outline">
+                      <Button size="1" variant="outline">
                         Rate Ride
                       </Button>
                     )}

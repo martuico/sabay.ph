@@ -10,6 +10,7 @@ export default async function proxy(request: NextRequest) {
 
   if (sessionCookie && pathname.startsWith("/dashboard") && !pathname.startsWith("/dashboard/setup-profile")) {
     const session = await auth.api.getSession({ headers: await headers() });
+
     if (!session) return NextResponse.redirect(new URL("/", request.url));
 
     const userDB = await prisma.user.findUnique({

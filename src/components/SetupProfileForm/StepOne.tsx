@@ -65,7 +65,6 @@ export default function StepOne({
           {...register("profession")}
           disabled={isLoading}
         />
-        {errors.profession && <p className="text-sm text-destructive">{errors.profession.message}</p>}
       </div>
 
       <div className="space-y-2">

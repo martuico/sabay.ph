@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { calcFare } from "@/lib/fare";
 
 export async function POST(req: Request) {
-  const { passengerId, pickup, dropoff } = await req.json();
+  const { passengerId, pickup, dropoff, numberOfSeats, pickupLocation, dropoffLocation } = await req.json();
 
   const fare = await calcFare(pickup, dropoff);
 
@@ -15,6 +15,9 @@ export async function POST(req: Request) {
       dropLat: dropoff.lat,
       dropLng: dropoff.lng,
       estimatedFare: fare,
+      numberOfSeats,
+      pickupLocation,
+      dropoffLocation,
     },
   });
 

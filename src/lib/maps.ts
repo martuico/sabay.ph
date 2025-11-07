@@ -1,6 +1,6 @@
 const GOOGLE_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
-export async function getPolyline(start, end) {
+export async function getPolyline(start: { lat: number; lng: number }, end: { lat: number; lng: number }) {
   const res = await fetch(
     `https://maps.googleapis.com/maps/api/directions/json?origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&key=${GOOGLE_KEY}`,
   );

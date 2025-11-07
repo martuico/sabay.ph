@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +13,13 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SignUp from "../BetterAuth/SignUp";
 
-export default function SignupDialog({ children, open: controlledOpen, onOpenChange }: RegistrationDialogProps) {
+interface SignupDiaologProps {
+  children: ReactNode;
+  open: boolean;
+  onOpenChange: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function SignupDialog({ children, open: controlledOpen, onOpenChange }: SignupDiaologProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const setOpen = onOpenChange || setInternalOpen;

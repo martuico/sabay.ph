@@ -105,11 +105,11 @@ model Route {
   description    String?
   scheduleType   ScheduleType  @default(ONETIME)
   recurringType  RecurringType @default(DAILY)
-  oneTimeDate    String
+  oneTimeDate    String?
   weekDays       String[]
   monthDays      String[]
-  startDate      String
-  endDate        String
+  startDate      String?
+  endDate        String?
   polyline       Json
   distanceKm     Float
   active         Boolean       @default(true)
