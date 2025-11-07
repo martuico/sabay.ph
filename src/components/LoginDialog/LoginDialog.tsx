@@ -1,11 +1,12 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import type React from "react";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,11 +15,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
 import { signIn } from "@/lib/auth-client";
 import { Checkbox } from "../ui/checkbox";
 
@@ -76,7 +75,7 @@ export default function LoginDialog({ children, onOpenRegistration }: LoginDialo
       });
       setOpen(false);
       reset();
-    } catch (error) {
+    } catch {
       toast({
         title: "Login failed",
         description: "Invalid email or password. Please try again.",

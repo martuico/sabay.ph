@@ -1,34 +1,34 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  User as UserIcon,
-  Mail,
-  Phone,
   Briefcase,
   Building2,
   Car as CarIcon,
-  Upload,
   CheckCircle2,
   Edit2,
-  Save,
-  X,
   FileText,
+  Mail,
+  Phone,
+  Save,
   Shield,
+  Upload,
+  User as UserIcon,
+  X,
 } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import z from "zod";
-import { AssetFile, Car, User } from "@/generated/prisma";
-import { useState } from "react";
 import Image from "next/image";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AssetFile, Car, User } from "@/generated/prisma";
+import { useToast } from "@/hooks/use-toast";
 
 const personalInfoSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
@@ -98,7 +98,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
         description: "Your personal information has been updated successfully.",
       });
       setIsEditingPersonal(false);
-    } catch (error) {
+    } catch {
       toast({
         title: "Update failed",
         description: "Something went wrong. Please try again.",
@@ -118,7 +118,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
         description: "Your car details have been updated successfully.",
       });
       setIsEditingCar(false);
-    } catch (error) {
+    } catch {
       toast({
         title: "Update failed",
         description: "Something went wrong. Please try again.",
@@ -288,7 +288,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
             <CardContent>
               <div className="flex flex-col md:flex-row items-start gap-4">
                 <div className="w-full md:w-48 h-32 border-2 border-dashed rounded-lg overflow-hidden bg-muted">
-                  <img
+                  <Image
                     src={user.govermentPhotoUrl || "/placeholder.svg"}
                     alt="Government ID"
                     className="w-full h-full object-cover"
@@ -324,7 +324,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
               <CardContent>
                 <div className="flex flex-col md:flex-row items-start gap-4">
                   <div className="w-full md:w-48 h-32 border-2 border-dashed rounded-lg overflow-hidden bg-muted">
-                    <img
+                    <Image
                       src={user.companyName || "/placeholder.svg"}
                       alt="Company ID"
                       className="w-full h-full object-cover"
@@ -361,7 +361,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
               <CardContent>
                 <div className="flex flex-col md:flex-row items-start gap-4">
                   <div className="w-full md:w-48 h-32 border-2 border-dashed rounded-lg overflow-hidden bg-muted">
-                    <img
+                    <Image
                       src={user.driversLicensePhotoUrl || "/placeholder.svg"}
                       alt="Driver's License"
                       className="w-full h-full object-cover"
@@ -430,7 +430,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
                         key={index}
                         className="aspect-video border-2 border-dashed rounded-lg overflow-hidden bg-muted"
                       >
-                        <img
+                        <Image
                           src={photo.url || "/placeholder.svg"}
                           alt={`Car photo ${index + 1}`}
                           className="w-full h-full object-cover"
@@ -569,7 +569,7 @@ export default function ProfileTabs({ user }: { user: UserWithCar }) {
                     <div className="space-y-2">
                       <Label>Car Registration (OR/CR)</Label>
                       <div className="aspect-video border-2 border-dashed rounded-lg overflow-hidden bg-muted">
-                        <img
+                        <Image
                           src={user.car?.registrationImageUrl || "/placeholder.svg"}
                           alt="Car Registration"
                           className="w-full h-full object-cover"

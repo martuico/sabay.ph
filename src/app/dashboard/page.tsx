@@ -1,25 +1,25 @@
-import { redirect } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
-  DollarSign,
   Car,
-  TrendingUp,
-  Star,
   CheckCircle2,
-  Navigation,
-  Settings,
+  DollarSign,
   LocationEditIcon,
+  Navigation,
   SearchIcon,
+  Settings,
+  Star,
+  TrendingUp,
   Wallet2,
 } from "lucide-react";
-import Link from "next/link";
-import { auth } from "@/lib/auth";
-import { mockUser } from "@/components/UpcomingHistoryRidesTabs/UpcomingHistoryRidesTabs.mocks";
 import { headers } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import UpcomingHistoryRidesTabs from "@/components/UpcomingHistoryRidesTabs";
+import { mockUser } from "@/components/UpcomingHistoryRidesTabs/UpcomingHistoryRidesTabs.mocks";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { auth } from "@/lib/auth";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({ headers: await headers() });

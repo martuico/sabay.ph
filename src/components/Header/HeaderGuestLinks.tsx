@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import LoginDialog from "../LoginDialog";
-import { Button } from "../ui/button";
 import SignupDialog from "../SignupDialog";
+import { Button } from "../ui/button";
 
 const HeaderGuestLinks = () => {
   const [showRegistration, setShowRegistration] = useState(false);

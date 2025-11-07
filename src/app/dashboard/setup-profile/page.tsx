@@ -1,8 +1,8 @@
+import type { SearchParams } from "nuqs/server";
 import SetupProfileForm from "@/components/SetupProfileForm";
-import { CardContent, CardDescription, CardHeader, CardTitle, Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { loadSearchParams } from "@/lib/searchParams";
-import type { SearchParams } from "nuqs/server";
 
 type PageProps = {
   searchParams: Promise<SearchParams>;

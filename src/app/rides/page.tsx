@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import NewsletterSignup from "@/components/NewsletterSignup";
+import { Suspense, useState } from "react";
 import DateCarousel from "@/components/DateCarousel";
-import RidesList from "@/components/RidesList";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import RideDetailPanel from "@/components/RideDetailPanel";
+import RidesList from "@/components/RidesList";
 import SearchRouteForm from "@/components/SearchRouteForm";
 
 function RidesContent() {

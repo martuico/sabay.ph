@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
-import { rideHistory, upcomingRides } from "./UpcomingHistoryRidesTabs.mocks";
-import { Calendar, Car, CheckCircle2, Clock, MapPin, Navigation, Plus, Star, Users, XCircle } from "lucide-react";
-import { Badge } from "../ui/badge";
 import { Button } from "@radix-ui/themes";
+import { Calendar, Car, CheckCircle2, Clock, MapPin, Navigation, Plus, Star, Users, XCircle } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "../ui/badge";
+import { rideHistory, upcomingRides } from "./UpcomingHistoryRidesTabs.mocks";
 
 export default function UpcomingHistoryRidesTabs() {
   const [activeTab, setActiveTab] = useState("overview");

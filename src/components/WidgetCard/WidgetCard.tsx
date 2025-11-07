@@ -1,7 +1,7 @@
-import { CardContent } from "@/components/ui/card";
-import { isReactNode } from "@/lib/utils";
 import { Card } from "@radix-ui/themes";
 import { ReactNode } from "react";
+import { CardContent } from "@/components/ui/card";
+import { isReactNode } from "@/lib/utils";
 
 export interface WidgetCardProps {
   subtitle: string;

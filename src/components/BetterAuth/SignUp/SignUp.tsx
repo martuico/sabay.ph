@@ -1,20 +1,20 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, X } from "lucide-react";
 //import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
-import { SignUpFormData, signUpSchema } from "./SignUp.interface";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast";
 import { createAndSignInUser } from "@/actions/userActions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { SignUpFormData, signUpSchema } from "./SignUp.interface";
 
-export default function SignUp() {
+export default function SignUp({ setOpen }: { setOpen: Dispatch<SetStateAction<boolean>> }) {
   const { toast } = useToast();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -34,45 +34,12 @@ export default function SignUp() {
       console.log("Signup data:", data);
       await createAndSignInUser(data);
       router.push("/dashboard/setup-profile");
-      //const { data: user } = await signUp.email({
-      //  email: data.email,
-      //  password: data.password,
-      //  name: `${data.firstName} ${data.lastName}`,
-      //  callbackURL: "/setup-profile",
-      //  fetchOptions: {
-      //    onResponse: () => {
-      //      setLoading(false);
-      //    },
-      //    onRequest: () => {
-      //      setLoading(true);
-      //    },
-      //    onError: (ctx) => {
-      //      toast({
-      //        title: "Signup failed",
-      //        description: ctx.error.message,
-      //        variant: "destructive",
-      //      });
-      //    },
-      //    onSuccess: async ({ data }) => {
-      //      console.log(c);
-      //      await prisma.user.update({
-      //        where: { id: user?.user.id },
-      //        data: {
-      //          firstName: data.firstName,
-      //          lastName: data.lastName,
-      //          phone: data.phone,
-      //        },
-      //      });
-      //      router.push("/setup-profileq;
-      //    },
-      //  },
-      //});
-
       toast({
         title: "Signup successful",
         description: "Welcome to Sabay.ph! You can now login.",
       });
       reset();
+      setOpen(false);
     } catch (_error) {
       toast({
         title: "Signup failed",

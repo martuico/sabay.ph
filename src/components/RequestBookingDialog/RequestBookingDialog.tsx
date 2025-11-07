@@ -1,11 +1,12 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, MapPin } from "lucide-react";
 import type React from "react";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,12 +15,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, MapPin } from "lucide-react";
 
 const requestBookingSchema = z.object({
   pickupLocation: z.string().min(3, "Pickup location is required"),
@@ -56,7 +55,6 @@ export default function RequestBookingDialog({
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
   } = useForm<RequestBookingFormData>({
     resolver: zodResolver(requestBookingSchema),
     defaultValues: {
@@ -91,7 +89,7 @@ export default function RequestBookingDialog({
       });
       setOpen(false);
       reset();
-    } catch (error) {
+    } catch {
       toast({
         title: "Booking failed",
         description: "Something went wrong. Please try again.",

@@ -1,10 +1,10 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "@/generated/prisma";
-import { Button } from "../ui/button";
 import { Camera, Car, CheckCircle2, ChevronLeft } from "lucide-react";
-import { Badge } from "../ui/badge";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
+import { User } from "@/generated/prisma";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
 
 export default function ProfileHeader({ user }: { user: User }) {
   return (

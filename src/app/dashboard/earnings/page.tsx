@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { DollarSign, TrendingUp, Calendar, Download, ArrowUpRight, ArrowDownRight, ChevronLeft } from "lucide-react";
-import WidgetCard from "@/components/WidgetCard";
+import { ArrowDownRight, ArrowUpRight, Calendar, ChevronLeft, DollarSign, Download, TrendingUp } from "lucide-react";
+import Link from "next/link";
 import TransactionTabs from "@/components/TransactionTabs";
 import { MonthlyBreakdown, Months, StatusTransaction } from "@/components/TransactionTabs/TransactionTabs";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import WidgetCard from "@/components/WidgetCard";
 
 // Mock earnings data
 const earningsStats = {

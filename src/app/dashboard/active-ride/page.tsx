@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  MapPin,
-  Navigation,
-  Clock,
-  Users,
-  Phone,
   CheckCircle2,
-  Circle,
-  DollarSign,
-  Play,
   ChevronDown,
   ChevronUp,
+  Circle,
+  Clock,
+  DollarSign,
+  MapPin,
+  Navigation,
+  Phone,
+  Play,
+  Users,
 } from "lucide-react";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Mock data for the ride
 const rideData = {
@@ -161,8 +161,9 @@ export default function DriverActiveRidePage() {
                         <div key={stop.id} className="flex items-start gap-3">
                           <div className="flex flex-col items-center">
                             <div
-                              className={`h-3 w-3 rounded-full ${stop.type === "pickup" ? "bg-primary" : "bg-secondary"
-                                }`}
+                              className={`h-3 w-3 rounded-full ${
+                                stop.type === "pickup" ? "bg-primary" : "bg-secondary"
+                              }`}
                             />
                             {index < rideData.stops.length - 1 && <div className="w-0.5 h-8 bg-border" />}
                           </div>
@@ -226,8 +227,9 @@ export default function DriverActiveRidePage() {
                     {stops.map((stop, index) => (
                       <Card
                         key={stop.id}
-                        className={`transition-all ${stop.completed ? "bg-muted/50 opacity-60" : "bg-background hover:shadow-md"
-                          }`}
+                        className={`transition-all ${
+                          stop.completed ? "bg-muted/50 opacity-60" : "bg-background hover:shadow-md"
+                        }`}
                       >
                         <CardContent className="p-4">
                           <div className="flex items-start gap-3">

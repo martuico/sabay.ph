@@ -1,6 +1,7 @@
 "use client";
 
 import { Dispatch, ReactNode, SetStateAction, useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SignUp from "../BetterAuth/SignUp";
 
@@ -33,7 +33,7 @@ export default function SignupDialog({ children, open: controlledOpen, onOpenCha
           <DialogDescription>Join Sabay.ph and start carpooling today</DialogDescription>
         </DialogHeader>
         <ScrollArea className="max-h-[calc(90vh-120px)] pr-4">
-          <SignUp />
+          <SignUp setOpen={setOpen} />
         </ScrollArea>
       </DialogContent>
     </Dialog>

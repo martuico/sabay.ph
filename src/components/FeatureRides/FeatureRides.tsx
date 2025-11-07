@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
-import { weekdayRides, weekendRides } from "./RideCar.mock";
+import { Card } from "@/components/ui/card";
 import RideCard from "./RideCar";
+import { weekdayRides, weekendRides } from "./RideCar.mock";
 
 export default function FeaturedRides() {
   return (

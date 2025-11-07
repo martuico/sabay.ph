@@ -1,6 +1,7 @@
 import ProfileHeader from "@/components/ProfileHeader";
-import { User } from "@/generated/prisma";
 import ProfileTabs from "@/components/ProfileTabs";
+import { User } from "@/generated/prisma";
+
 // Mock user data
 const mockUserData = {
   firstName: "Juan",

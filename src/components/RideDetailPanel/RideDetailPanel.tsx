@@ -1,12 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { MapPin, Clock, Users, Phone, MessageCircle, Star, Shield, Car } from "lucide-react";
+import { Car, Clock, MapPin, MessageCircle, Phone, Shield, Star, Users } from "lucide-react";
 import RequestBookingDialog from "@/components/RequestBookingDialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 interface RideDetailPanelProps {
   rideId: string | null;

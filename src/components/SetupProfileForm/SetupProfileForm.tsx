@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { FieldValues, useForm, UseFormRegister } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FieldValues, UseFormRegister, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, ChevronRight, ChevronLeft } from "lucide-react";
-import StepOne from "./StepOne";
 import { SetupProfileFormData, setupProfileSchema } from "./SetupProfileForm.interface";
-import StepTwo from "./StepTwo";
+import StepOne from "./StepOne";
 import StepThree from "./StepThree";
+import StepTwo from "./StepTwo";
 
 //const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -28,7 +28,6 @@ export default function SetupProfileForm() {
     handleSubmit,
     formState: { errors },
     trigger,
-    watch,
   } = useForm<SetupProfileFormData>({
     resolver: zodResolver(setupProfileSchema),
     defaultValues: {
@@ -50,7 +49,7 @@ export default function SetupProfileForm() {
 
       // Redirect to dashboard
       router.push("/dashboard");
-    } catch (error) {
+    } catch {
       toast({
         title: "Setup failed",
         description: "Something went wrong. Please try again.",

@@ -1,5 +1,5 @@
-import { createAuthClient } from "better-auth/client";
 import type { AuthContext, BetterAuthPlugin } from "better-auth";
+import { createAuthClient } from "better-auth/client";
 
 export const profilePlugin = () =>
   ({

@@ -1,107 +1,91 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { UserContext } from "@/context/AuthUserContext";
+import { User } from "@/generated/prisma";
 import { authClient } from "@/lib/auth-client";
-import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { memo, useEffect, useState } from "react";
-import { User as UserPrisma } from "@/generated/prisma";
-import { User } from "better-auth/types";
+import { Button } from "../ui/button";
 
-type Profile = UserPrisma & User;
-
-const HeaderDropdownAuth = () => {
-  const [user, setUser] = useState<Profile>();
+const HeaderDropdownAuth = ({
+  profile,
+  setIsLoggedIn,
+}: {
+  profile: User;
+  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
+}) => {
+  const router = useRouter();
+  const { setProfile } = useContext(UserContext);
 
   useEffect(() => {
-    let ignore = false;
+    if (profile) setProfile(profile);
+  }, [profile, setProfile]);
 
-    const fetchSession = async () => {
-      const { data } = await authClient.getSession();
-      if (!ignore) {
-        setUser((prev) => prev ?? (data?.user as Profile));
-      }
-    };
+  if (!profile.id) return null;
 
-    fetchSession();
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
-  if (!user) return null;
-  console.log(user);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar>
-          <AvatarImage src={user.image || ""} alt="@shadcn" />
-          <AvatarFallback>
-            {user.firstName?.charAt(0)}
-            {user.lastName?.charAt(0)}
-          </AvatarFallback>
-        </Avatar>
+        <Button variant="ghost" size="icon-lg">
+          <Avatar className="cursor-pointer">
+            <AvatarImage src={profile.image || ""} alt="@shadcn" />
+            <AvatarFallback>
+              {profile.firstName?.charAt(0)}
+              {profile.lastName?.charAt(0)}
+            </AvatarFallback>
+          </Avatar>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link href="/dashboard/profile">Profile</Link>
+          <DropdownMenuItem asChild>
+            <Link className="cursor-pointer" href="/dashboard">
+              Dashboard
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link className="cursor-pointer" href="/dashboard/profile">
+              Profile
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link className="cursor-pointer" href="/dashboard/earnings">
+              Earnings
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            New Team
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+          <DropdownMenuItem asChild>
+            <Link className="cursor-pointer" href="/dashboard/add-routes">
+              Host a Ride
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={async () =>
+            await authClient.signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  setIsLoggedIn(false);
+                  router.push("/");
+                },
+              },
+            })
+          }
+        >
           Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,6 +1,6 @@
-import { getGridsInRadius, haversineDistance } from "@/lib/grid";
 import Redis from "ioredis";
 import { MeiliSearch } from "meilisearch";
+import { getGridsInRadius, haversineDistance } from "@/lib/grid";
 
 const CACHE_TTL = 60 * 5; // 5 minutes
 
